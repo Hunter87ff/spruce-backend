@@ -8,3 +8,4 @@ Discord-Flask
 aiohttp
 cachetools
 gunicorn
+Flask[async]
