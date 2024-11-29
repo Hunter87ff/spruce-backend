@@ -1,4 +1,4 @@
-import _http
+import src._http as _http
 from module._guild import Guild
 
 class Client:

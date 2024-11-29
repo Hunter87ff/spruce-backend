@@ -3,7 +3,7 @@ import sys
 import config
 import logging
 import asyncio
-import _http as client
+import src._http as client
 from flask_cors import CORS
 from flask_caching import Cache
 from flask_compress import Compress

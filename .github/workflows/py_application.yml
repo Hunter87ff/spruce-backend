@@ -1,0 +1,51 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+
+    
+permissions:
+  contents: read
+  
+env:
+  CSECRET : {{secrets.CSECRET}}
+  MSGH : {{secrets.MSGH}}
+  SECRET_KEY : {{secrets.SECRET_KEY}}
+  TOKEN :  {{secrets.TOKEN}}
+  WEBH : {{secrets.WEBH}}
+  CALLBACK :  {{secrets.CALLBACK}}
+  XCLIENT_ID :  {{secrets.XCLIENT_ID}}
+  XCLIENT_SECRET : {{secrets.XCLIENT_SECRET}}
+  PAYWBH :  {{secrets.PAYWBH}}
+  ALLOWED_ORIGIN : {{secrets.ALLOWED_ORIGIN}}
+  CLIENT_BASE : {{secrets.CLIENT_BASE}}
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10.9 
+
+    - name: Verify Java version
+      run:     - name: Setup CF
+      run: |
+        curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared.deb && sudo cloudflared service install ${{ secrets.CF_KEY }}
+
+
+    - name: Setup Deploy
+      run: |
+        python -m venv .venv
+        . .venv/bin/activate
+        pip install -r requirements.txt
+        gunicorn --workers 4 --threads 8 --timeout 60  app:app
+
+      working-directory: ./src 
+
+ 

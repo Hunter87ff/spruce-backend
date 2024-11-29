@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response, redirect
-import config, aiohttp, _http
+import config, aiohttp, src._http as _http
 auth = Blueprint("auth", __name__)
 
 
