@@ -2,6 +2,7 @@ logging
 python-dotenv
 Flask-Caching
 Flask-Compress
+Flask-Cors
 cashfree-pg
 Discord-Flask
 aiohttp
