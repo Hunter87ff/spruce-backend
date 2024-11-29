@@ -13,7 +13,7 @@ env:
   MSGH : {{secrets.MSGH}}
   SECRET_KEY : {{secrets.SECRET_KEY}}
   TOKEN :  {{secrets.TOKEN}}
-  WEBH : {{secrets.WEBH}}
+  # WEBH : {{secrets.WEBH}}
   CALLBACK :  {{secrets.CALLBACK}}
   XCLIENT_ID :  {{secrets.XCLIENT_ID}}
   XCLIENT_SECRET : {{secrets.XCLIENT_SECRET}}
