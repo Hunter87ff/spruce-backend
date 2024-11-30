@@ -1,7 +1,7 @@
 from module.member import Member
 from cachetools import cached, TTLCache
 from module.permissions import Permissions
-import src._http as _http
+import _http
 import config
 
 
