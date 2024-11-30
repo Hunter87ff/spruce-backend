@@ -8,8 +8,6 @@ from flask_cors import CORS
 from flask_caching import Cache
 from flask_compress import Compress
 from flask import Flask, request, jsonify
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 
 
 if sys.platform.startswith("win"):
@@ -21,11 +19,11 @@ log.setLevel(logging.ERROR)
 app = Flask(__name__)
 #app.config["SERVER_NAME"] = "localhost:3001" 
 
-limiter = Limiter(
-    get_remote_address, # Use the client's IP address to identify them
-    app=app,
-    default_limits=["2000 per day", "500 per hour"] # Set default limits
-)
+# limiter = Limiter(
+#     get_remote_address, # Use the client's IP address to identify them
+#     app=app,
+#     default_limits=["2000 per day", "500 per hour"] # Set default limits
+# )
 app.secret_key = config.SECRET_KEY
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 app.config['CACHE_TYPE'] = 'simple'  # Choose the cache type (e.g., 'simple', 'redis', etc.)

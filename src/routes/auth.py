@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response, redirect
 import config, aiohttp, _http
 auth = Blueprint("auth", __name__)
-
+data = {}
 
 @auth.route("/api/authorise", methods=["GET"])
 async def token():
@@ -27,7 +27,7 @@ async def token():
         # Make an asynchronous POST request to Discord's OAuth2 token endpoint
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                "https://discord.com/api/oauth2/token",
+                config.DISCORD_TOKEN_URL,
                 data=token_request,
                 headers={"Content-Type": "application/x-www-form-urlencoded"},
             ) as response:
@@ -56,10 +56,17 @@ async def login():
 
 @auth.route("/api/oauth2", methods=["GET"])
 async def oauth2():
-    access_token = request.args.get("code")
+    access_token = request.cookies.get("access_token") or request.args.get("code") or request.headers.get("Authorization")
+    if data.get(access_token):
+        return jsonify(data.get(access_token)), 288
+
     _authorised, code = await _http.fetch_api("/users/@me", access_token)
     _resp = make_response(jsonify(_authorised))
-    _resp.set_cookie("access_token", access_token) if code == 200 else None
+    if code==200:
+        _resp.set_cookie("access_token", access_token)
+        if len(data)>1000:data.clear()
+        data[access_token] = _authorised
+
     return _resp, code if code>400 else 288
 
 
