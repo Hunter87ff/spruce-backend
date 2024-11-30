@@ -16,8 +16,8 @@ if sys.platform.startswith("win"):
 
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
-app = Flask("main", static_folder="templates/static", template_folder="templates")
-app.config["SERVER_NAME"] = "localhost:3001" 
+app = Flask(__name__)
+#app.config["SERVER_NAME"] = "localhost:3001" 
 
 
 app.secret_key = config.SECRET_KEY
@@ -25,7 +25,11 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 app.config['CACHE_TYPE'] = 'simple'  # Choose the cache type (e.g., 'simple', 'redis', etc.)
 Compress(app)
 cache = Cache(app)
-CORS(app, origins=config.ALLOWED_ORIGIN, supports_credentials=True, resources={"/*": {"origins": "*"}})
+CORS(app, 
+     origins=config.ALLOWED_ORIGIN, 
+     supports_credentials=True, 
+     resources={"/*": {"origins": "*"}}
+)
 
 
 @app.route('/api/status', methods=['GET'])
