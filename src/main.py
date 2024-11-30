@@ -1,5 +1,5 @@
 from app import app
-import os
+import os, config
 from routes.auth import auth
 from routes._guild import guild
 

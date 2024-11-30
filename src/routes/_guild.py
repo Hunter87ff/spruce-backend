@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-import src._http as client
+import _http as client
 from app import app
 from flask_caching import Cache
 from module._client import Client

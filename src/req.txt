@@ -9,3 +9,4 @@ aiohttp
 cachetools
 gunicorn
 Flask[async]
+Flask-Limiter
