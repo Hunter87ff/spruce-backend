@@ -9,7 +9,6 @@ import config
 cache = TTLCache(maxsize=100, ttl=300)
 class Guild():
     def __init__(self, payload:dict):
-        print(payload)
         self._payload = payload
         self.id = int(self._payload.get("id"))
         self.name = self._payload.get("name")
