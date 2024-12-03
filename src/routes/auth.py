@@ -33,11 +33,7 @@ async def token():
             ) as response:
                 if response.status == 200:
                     _data:dict = await response.json()
-                    result = {
-                        "access_token": _data.get("access_token"),
-                        "refresh_token": _data.get("refresh_token"),
-                    }
-                    return jsonify(result), 200
+                    return jsonify(_data), 200
 
                 # For non-OK responses, forward Discord's error message
                 error_data = await response.json()
